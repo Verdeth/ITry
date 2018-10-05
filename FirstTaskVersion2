@@ -1,0 +1,102 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bookforbeginner;
+
+import java.io.IOException;
+import static java.lang.Math.sqrt;
+import java.util.Scanner;
+
+/**
+ *
+ * @author MSI
+ */
+public class BookForBeginner {
+
+    /**
+     * @param args the command line arguments
+     * @throws java.io.IOException
+     */
+    public static void main(String[] args) throws IOException {
+       
+       Scanner sc = new Scanner(System.in);
+       int var1 = 0; 
+       if (sc.hasNextInt()) {var1 = sc.nextInt();} //read integer number from keybord;
+       int buff = var1;
+       long start = System.currentTimeMillis();
+        // поиск смысла жизни ...
+       int count = 0, x1 = 0;//, x2 = 0, x3 = 0;
+       int need_count = 5;
+        boolean prevSimple = false; // variable to store whether the previous Prime is a divisor 
+        int i = 2;
+        while ((var1>1)&&(count<need_count)&&(i <= var1))
+        {
+            if (isSimple(i))
+            {
+                 System.out.println(var1);
+                 System.out.println(i);
+                if (var1%i == 0)
+                {
+                    var1/=i;
+                    if (!prevSimple) 
+                    {
+                        prevSimple = true; 
+                        count = 1; 
+                        //x1 = i;
+                    }
+                    else 
+                    {
+                        ++count;
+                       /* if (x2==0) x2 = i; else*/ x1 = i;
+                    }
+                }
+                else
+                {
+                    prevSimple = false; 
+                    count = x1 = 0;
+                    var1 = buff;
+                }
+            }
+            ++i;
+        }
+        
+        System.out.println((var1==1&&count==need_count)?printString(need_count,x1):"No");    
+       long finish = System.currentTimeMillis();
+       long timeConsumedMillis = finish - start;
+       System.out.println(timeConsumedMillis);
+
+    }
+    
+    static boolean isSimple(int number)
+    {
+        if (number < 2)
+            return false;
+        for (int i = 2; i <= Math.sqrt(number); i++) {
+            if (number % i == 0)
+                return false;
+        }
+        return true;
+    }
+    
+    static String printString (int num, int lastPrime)
+    {   
+        System.out.println("hi");
+        StringBuilder str = new StringBuilder(Integer.toString(lastPrime));
+        lastPrime--;
+        while (num>1 && lastPrime > 1)
+        {
+            if (isSimple(lastPrime))
+            {
+                str.append("*" + Integer.toString(lastPrime));
+                num--;
+            }
+            lastPrime--;
+        }
+        return str.toString();
+}
+}
+
+ 
+    
